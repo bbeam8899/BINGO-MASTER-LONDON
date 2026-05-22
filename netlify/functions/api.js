@@ -1,11 +1,10 @@
 const VCT_TERMS = [
-  "9-3 Curse", "Tech Pause", "Tactical Timeout", "ACE!", "Thrifty Round",
-  "Clutch 1v3", "Ninja Defuse", "Knife Kill", "Flawless Round", "Overtime",
-  "Eco Frag", "Jett Diff", "Team Ace", "Spike Planted A", "Spike Planted B",
-  "Perfect Defuse", "1 HP Dream", "Wallbang", "Lineup Larry", "Blind Kill",
-  "Judge in Smoke", "Odin Spam", "Map Point", "Match Point", "Reverse Sweep",
-  "Crowd Cheering", "Caster Curse", "Player Whiff", "Insane Flick", "Utility Dump",
-  "Fast Rotate", "Fake Site", "Post-plant", "Sheriff 1-tap", "Op Entry" , "six seven", "Neon Diff"
+  "9-3 Curse", "ACE!", "Blind Kill", "Caster Curse", "Clutch 1v3",
+  "Crowd Cheering", "Eco Frag", "Fake Site", "Fast Rotate", "Flawless Round",
+  "Insane Flick", "Jett Diff", "Judge in Smoke", "Knife Kill", "Lineup Larry",
+  "Map Point", "Match Point", "Neon Diff", "Ninja Defuse", "Odin Spam",
+  "Overtime", "Player Whiff", "Reverse Sweep", "Sheriff 1-tap", "Spike Planted A",
+  "Spike Planted B", "Tactical Timeout", "Tech Pause"
 ];
 
 const ADMIN_PASS = "huatua";

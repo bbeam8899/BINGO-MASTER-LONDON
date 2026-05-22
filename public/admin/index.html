@@ -246,23 +246,23 @@
       backdrop-filter: blur(16px);
     }
     
-    /* 🌸 Cute Spell Slot Buttons & Admin 5x5 Grid styles */
+    /* 🌸 Cute Spell Slot Buttons & Admin Responsive Grid styles */
     .admin-bingo-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 10px;
       background: rgba(14, 11, 25, 0.6);
-      padding: 16px;
+      padding: 18px;
       border-radius: 20px;
       border: 1.5px solid var(--glass-highlight);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       margin: 20px auto 30px auto;
-      max-width: 540px;
+      max-width: 100%;
       backdrop-filter: blur(10px);
     }
 
     .admin-bingo-cell {
-      aspect-ratio: 1;
+      min-height: 60px;
       background: rgba(28, 23, 48, 0.85);
       border: 1.5px solid rgba(255, 255, 255, 0.05);
       border-radius: 12px;
@@ -270,8 +270,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 6px;
-      font-size: clamp(0.58rem, 1.6vw, 0.84rem);
+      padding: 8px;
+      font-size: 0.85rem;
       font-weight: 600;
       color: #dfdaf2;
       cursor: pointer;
@@ -284,6 +284,8 @@
       border-color: var(--anime-pink);
       background: rgba(43, 36, 72, 0.95);
       color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 117, 151, 0.2);
     }
 
     .admin-bingo-cell.marked {
@@ -291,6 +293,7 @@
       color: white;
       border-color: rgba(255, 255, 255, 0.4);
       font-weight: 700;
+      box-shadow: 0 4px 15px rgba(255, 117, 151, 0.4);
     }
 
     .admin-bingo-cell.jjaz {
@@ -525,13 +528,12 @@
     let oldPendingCount = 0; // track for alert sound
 
     const VCT_TERMS = [
-      "9-3 Curse", "Tech Pause", "Tactical Timeout", "ACE!", "Thrifty Round",
-      "Clutch 1v3", "Ninja Defuse", "Knife Kill", "Flawless Round", "Overtime",
-      "Eco Frag", "Jett Diff", "Team Ace", "Spike Planted A", "Spike Planted B",
-      "Perfect Defuse", "1 HP Dream", "Wallbang", "Lineup Larry", "Blind Kill",
-      "Judge in Smoke", "Odin Spam", "Map Point", "Match Point", "Reverse Sweep",
-      "Crowd Cheering", "Caster Curse", "Player Whiff", "Insane Flick", "Utility Dump",
-      "Fast Rotate", "Fake Site", "Post-plant", "Sheriff 1-tap", "Op Entry" , "six seven", "Neon Diff"
+      "9-3 Curse", "ACE!", "Blind Kill", "Caster Curse", "Clutch 1v3",
+      "Crowd Cheering", "Eco Frag", "Fake Site", "Fast Rotate", "Flawless Round",
+      "Insane Flick", "Jett Diff", "Judge in Smoke", "Knife Kill", "Lineup Larry",
+      "Map Point", "Match Point", "Neon Diff", "Ninja Defuse", "Odin Spam",
+      "Overtime", "Player Whiff", "Reverse Sweep", "Sheriff 1-tap", "Spike Planted A",
+      "Spike Planted B", "Tactical Timeout", "Tech Pause"
     ];
 
     // Anime floating particles generator
@@ -615,17 +617,8 @@
         
         localStorage.setItem('adminRoomID', room);
         
-        // Load or generate board for this room
-        const savedBoardKey = 'adminBoard_' + room;
-        let boardData = localStorage.getItem(savedBoardKey);
-        if (boardData) {
-          adminBoard = JSON.parse(boardData);
-        } else {
-          let shuffled = [...VCT_TERMS].sort(() => Math.random() - 0.5).slice(0, 24);
-          shuffled.splice(12, 0, "JJAZ");
-          adminBoard = shuffled;
-          localStorage.setItem(savedBoardKey, JSON.stringify(adminBoard));
-        }
+        // Admin board is simply the full list of VCT_TERMS sorted alphabetically!
+        adminBoard = [...VCT_TERMS].sort();
 
         generateAdminGrid();
         
@@ -703,12 +696,7 @@
       if(confirm("⚠️ คำเตือน: คุณแน่ใจที่จะล้างบอร์ดเหตุการณ์และลบประวัติผู้เล่นทั้งหมดในห้องใช่ไหม?")) {
         await fetch('/api/reset?room=' + encodeURIComponent(room) + '&pwd=' + secretPass);
         
-        // Reshuffle the admin board on reset
-        const savedBoardKey = 'adminBoard_' + room;
-        let shuffled = [...VCT_TERMS].sort(() => Math.random() - 0.5).slice(0, 24);
-        shuffled.splice(12, 0, "JJAZ");
-        adminBoard = shuffled;
-        localStorage.setItem(savedBoardKey, JSON.stringify(adminBoard));
+        adminBoard = [...VCT_TERMS].sort();
         generateAdminGrid();
 
         document.getElementById('current-word').innerText = "-";
