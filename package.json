@@ -1,0 +1,12 @@
+{
+  "name": "jjaz-vct-masters-london-bingo",
+  "version": "1.0.0",
+  "description": "BINGO JJAZ x VCT MASTER LONDON 2026 - Vanilla JS & Netlify Functions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>🌸 BINGO JJAZ x VCT MASTER LONDON 2026 - Admin Center 🌸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Fredoka:wght@600;700&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --anime-pink: #ff7597; /* Cute Cherry Blossom Pink */
+      --anime-purple: #a17fff; /* Magical Lavender Purple */
+      --anime-cyan: #00f3ff; /* Electric Pop Cyan */
+      --anime-gold: #ffd23f; /* SSR Shiny Gold */
+      --success-green: #2ecc71;
+      --glass-bg: rgba(20, 16, 33, 0.75);
+      --glass-highlight: rgba(255, 117, 151, 0.25);
+    }
+
+    body { 
+      font-family: 'Kanit', 'Fredoka', sans-serif; 
+      background: url('../background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ece8e1; 
+      margin: 0; 
+      padding: 0; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(30, 20, 50, 0.9) 0%, rgba(15, 12, 28, 0.95) 100%);
+      backdrop-filter: blur(8px);
+      z-index: 0;
+    }
+
+    /* Floating magical stars canvas container */
+    #particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .content-wrapper { 
+      position: relative;
+      z-index: 10;
+      flex: 1; 
+      padding: 30px 20px; 
+    }
+
+    h2, h3 { 
+      margin-top: 0; 
+      color: #ece8e1; 
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    
+    /* 🔒 Admin Login Panel */
+    .panel { 
+      background: var(--glass-bg); 
+      padding: 45px 35px; 
+      border-radius: 24px; 
+      max-width: 440px; 
+      margin: 100px auto; 
+      border: 1.5px solid var(--glass-highlight); 
+      box-shadow: 
+        0 15px 50px rgba(0,0,0,0.8),
+        0 0 30px rgba(255, 117, 151, 0.2); 
+      text-align: center;
+      backdrop-filter: blur(15px);
+    }
+
+    .vct-admin-logo {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 15px rgba(255, 117, 151, 0.6));
+      animation: animeFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes animeFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    
+    .input-box { 
+      padding: 16px 20px; 
+      width: 100%; 
+      box-sizing: border-box; 
+      margin-bottom: 20px; 
+      border-radius: 12px; 
+      border: 1.5px solid rgba(255, 117, 151, 0.15); 
+      text-align: center; 
+      font-size: 16px; 
+      font-weight: 500; 
+      background: rgba(14, 11, 25, 0.85); 
+      color: white; 
+      transition: all 0.3s;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .input-box:focus { 
+      outline: none; 
+      border-color: var(--anime-pink); 
+      box-shadow: 0 0 15px rgba(255, 117, 151, 0.4);
+      background: rgba(22, 16, 38, 0.95);
+    }
+    
+    .btn-main { 
+      padding: 16px 24px; 
+      border: none; 
+      border-radius: 12px; 
+      font-size: 16px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      width: 100%; 
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+      font-family: 'Kanit', 'Fredoka', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-login { 
+      background: linear-gradient(135deg, var(--anime-pink) 0%, var(--anime-purple) 100%); 
+      color: white; 
+      box-shadow: 0 6px 20px rgba(255, 117, 151, 0.35);
+    }
+
+    .btn-login:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(255, 117, 151, 0.55);
+      filter: brightness(1.1);
+    }
+    
+    #control-section { 
+      display: none; 
+      max-width: 1350px; 
+      margin: auto; 
+    }
+    
+    /* 🎛️ Top Management Controls */
+    .top-controls { 
+      background: var(--glass-bg); 
+      padding: 20px 30px; 
+      border-radius: 20px; 
+      margin-bottom: 25px; 
+      border: 1.5px solid var(--glass-highlight); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+      backdrop-filter: blur(16px);
+    }
+
+    .top-controls-left { 
+      display: flex; 
+      align-items: center; 
+      gap: 15px; 
+    }
+
+    .top-controls-left h2 {
+      font-family: 'Fredoka', 'Kanit', sans-serif;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(to right, #fff 30%, #ffcbd7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.5rem;
+    }
+
+    .top-controls-right { 
+      display: flex; 
+      gap: 12px; 
+      align-items: center;
+    }
+
+    .btn-open { 
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); 
+      color: white; 
+      width: auto; 
+      padding: 12px 25px;
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    }
+
+    .btn-open:hover { 
+      box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    .btn-reset { 
+      background: transparent; 
+      color: var(--anime-pink); 
+      border: 1.5px solid var(--anime-pink); 
+      width: auto; 
+      padding: 11px 25px;
+      border-radius: 12px;
+    }
+
+    .btn-reset:hover { 
+      background: rgba(255, 117, 151, 0.12); 
+      box-shadow: 0 4px 15px rgba(255, 117, 151, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-logout { 
+      background: transparent; 
+      color: #b2a8cc; 
+      border: none; 
+      font-size: 14px; 
+      text-decoration: underline; 
+      cursor: pointer; 
+      margin-left: 15px;
+      transition: color 0.3s;
+    }
+
+    .btn-logout:hover { 
+      color: white; 
+    }
+    
+    /* 📊 Dashboard Layout */
+    .dashboard-layout { 
+      display: flex; 
+      gap: 25px; 
+      align-items: flex-start;
+    }
+
+    .card { 
+      background: var(--glass-bg); 
+      padding: 30px; 
+      border-radius: 20px; 
+      border: 1.5px solid var(--glass-highlight); 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+      backdrop-filter: blur(16px);
+    }
+    
+    /* 🌸 Cute Spell Slot Buttons & Admin 5x5 Grid styles */
+    .admin-bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      background: rgba(14, 11, 25, 0.6);
+      padding: 16px;
+      border-radius: 20px;
+      border: 1.5px solid var(--glass-highlight);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin: 20px auto 30px auto;
+      max-width: 540px;
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-bingo-cell {
+      aspect-ratio: 1;
+      background: rgba(28, 23, 48, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px;
+      font-size: clamp(0.58rem, 1.6vw, 0.84rem);
+      font-weight: 600;
+      color: #dfdaf2;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      user-select: none;
+    }
+
+    .admin-bingo-cell:hover {
+      border-color: var(--anime-pink);
+      background: rgba(43, 36, 72, 0.95);
+      color: #fff;
+    }
+
+    .admin-bingo-cell.marked {
+      background: linear-gradient(135deg, var(--anime-pink) 0%, var(--anime-purple) 100%);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
+      font-weight: 700;
+    }
+
+    .admin-bingo-cell.jjaz {
+      background: linear-gradient(135deg, #ffe359 0%, var(--anime-gold) 100%);
+      font-weight: 800 !important;
+      color: #1e1335;
+      border: 2px solid #fff;
+    }
+
+
+    
+    /* 👥 Player Panels */
+    .player-list-container { 
+      max-height: 250px; 
+      overflow-y: auto; 
+      text-align: left; 
+      padding: 12px; 
+      background: rgba(14, 11, 25, 0.8); 
+      border-radius: 10px; 
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .player-list-container::-webkit-scrollbar { width: 6px; }
+    .player-list-container::-webkit-scrollbar-thumb { background: #3c325c; border-radius: 4px; }
+    
+    .player-tag { 
+      display: inline-flex; 
+      align-items: center; 
+      background: rgba(30, 24, 51, 0.95); 
+      color: #ece8e1; 
+      padding: 6px 12px; 
+      border-radius: 6px; 
+      font-size: 13px; 
+      margin: 4px; 
+      border-left: 3px solid var(--anime-pink);
+      font-weight: 600;
+    }
+
+    /* 👑 Pending Winners Panel (Admin Exclusive!) */
+    .pending-container {
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pending-card {
+      background: linear-gradient(135deg, #221a2b 0%, #301f2f 100%);
+      border: 1.5px solid var(--anime-gold);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(255, 210, 63, 0.25);
+      animation: alertGlow 1.5s infinite alternate;
+    }
+
+    @keyframes alertGlow {
+      from { box-shadow: 0 0 10px rgba(255, 210, 63, 0.15); }
+      to { box-shadow: 0 0 25px rgba(255, 210, 63, 0.5); }
+    }
+
+    .pending-info {
+      text-align: left;
+    }
+
+    .pending-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--anime-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pending-status {
+      font-size: 0.85rem;
+      color: #b2a8cc;
+      margin-top: 3px;
+    }
+
+    .btn-approve {
+      background: linear-gradient(135deg, var(--success-green) 0%, #27ae60 100%);
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+      transition: all 0.2s;
+    }
+
+    .btn-approve:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+      filter: brightness(1.1);
+    }
+    
+    /* 🏆 Large Winner Alert Banner */
+    #winner-alert { 
+      display: none; 
+      font-size: 26px; 
+      font-weight: 800; 
+      color: #1e1335; 
+      background: linear-gradient(90deg, var(--anime-gold), #ff9f1c); 
+      padding: 20px; 
+      border-radius: 16px; 
+      margin-bottom: 25px; 
+      text-align: center; 
+      box-shadow: 0 0 25px rgba(255, 210, 63, 0.7); 
+      animation: pulseAlert 1s infinite alternate;
+      border: 3px solid #fff;
+    }
+
+    @keyframes pulseAlert { 
+      from { transform: scale(1); } 
+      to { transform: scale(1.01); box-shadow: 0 0 35px rgba(255, 210, 63, 0.95);} 
+    }
+    
+    .current-word-box { 
+      background: rgba(14, 11, 25, 0.85); 
+      padding: 10px 20px; 
+      border-radius: 10px; 
+      display: inline-block; 
+      border: 1px solid rgba(255, 255, 255, 0.05); 
+      font-size: 16px;
+    }
+
+    .highlight-text { 
+      color: var(--anime-pink); 
+      font-weight: 800; 
+      font-size: 20px; 
+      margin-left: 10px;
+      text-shadow: 0 0 10px rgba(255, 117, 151, 0.5);
+    }
+
+    .empty-state {
+      color: #5d5475;
+      font-size: 0.95rem;
+      padding: 15px 0;
+      font-weight: 500;
+    }
+
+    .footer { 
+      width: 100%; 
+      text-align: center; 
+      font-size: 13px; 
+      color: rgba(223, 218, 242, 0.35); 
+      padding: 20px 0; 
+      font-weight: 400; 
+      letter-spacing: 0.5px; 
+      margin-top: auto; 
+      z-index: 10;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-container"></div>
+
+  <div class="content-wrapper">
+    <!-- Login Screen -->
+    <div class="panel" id="login-section">
+      <img src="../logo.png" alt="VCT Masters Logo" class="vct-admin-logo">
+      <h2 style="color: var(--anime-pink); font-weight: 700; font-size: 24px; margin-bottom: 25px; font-family: 'Fredoka', 'Kanit', sans-serif;">VCT ADMIN LOGIN</h2>
+      <input type="text" id="admin-id" class="input-box" placeholder="ADMIN USERNAME" autocomplete="off">
+      <input type="password" id="admin-pwd" class="input-box" placeholder="ADMIN PASSWORD" autocomplete="off">
+      <button class="btn-main btn-login" onclick="checkLogin()">เข้าระบบแผงควบคุม 🔐</button>
+    </div>
+
+    <!-- Active Management Screen -->
+    <div id="control-section">
+      <div id="winner-alert">🎉 BINGO APPROVED! ผู้ชนะอย่างเป็นทางการคือ: <span id="winner-name" style="text-decoration: underline;"></span> 🎉</div>
+      
+      <div class="top-controls">
+        <div class="top-controls-left">
+          <h2>🎯 MASTER DASHBOARD</h2>
+          <input type="text" id="admin-room" class="input-box" placeholder="Room ID" style="margin: 0; width: 180px; padding: 10px;">
+          <button class="btn-main btn-open" onclick="initRoom()">เปิดห้องแข่งขัน</button>
+        </div>
+        <div class="top-controls-right">
+          <button class="btn-main btn-reset" onclick="resetRoom()">รีเซ็ตห้องแข่งขัน 🧹</button>
+          <button class="btn-logout" onclick="adminLogout()">ออกจากระบบ</button>
+        </div>
+      </div>
+
+      <div class="dashboard-layout" id="main-dashboard" style="display: none;">
+        <!-- Left Side: Announcement Event Panel -->
+        <div class="card" style="flex: 2.5; text-align: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; text-align: left;">
+            <div>
+              <h3 style="font-family: 'Fredoka', 'Kanit', sans-serif; font-size: 1.4rem; color: var(--anime-pink);">📌 ตารางเวทมนตร์แอดมิน (Admin Magic Board)</h3>
+              <span style="color: #b2a8cc; font-size: 13px;">ตารางสุ่มของแอดมิน (แอดมินกดได้คนเดียว) เพื่อกากบาทแผ่นคนดูพร้อมกันแบบ Real-time ✨</span>
+            </div>
+            <div class="current-word-box">ล่าสุด: <span class="highlight-text" id="current-word">-</span></div>
+          </div>
+          
+          <!-- 5x5 Admin Grid -->
+          <div id="admin-bingo-grid" class="admin-bingo-grid"></div>
+        </div>
+        
+        <!-- Right Side: Pending Winners & Registered Players -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+          <!-- 👑 Pending Winners (Auto-Calculated by Backend) -->
+          <div class="card" style="border: 1.5px solid var(--glass-highlight);">
+            <h3 style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; margin-bottom: 15px; color: var(--anime-gold); font-family: 'Fredoka', 'Kanit', sans-serif; display: flex; align-items: center; gap: 6px;">👑 ผู้รออนุมัติบิงโก (Pending Winners)</h3>
+            <div class="pending-container" id="pending-list">
+              <div class="empty-state">⏳ รอนักลุ้นทำบิงโกสำเร็จ...</div>
+            </div>
+          </div>
+
+          <!-- Active Players list -->
+          <div class="card">
+            <h3 id="player-count" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; margin-bottom: 15px; font-family: 'Fredoka', 'Kanit', sans-serif;">👥 ผู้ร่วมลุ้นบิงโก (0)</h3>
+            <div class="player-list-container" id="player-list">
+              <div class="empty-state">ยังไม่มีผู้เข้าร่วมห้องนี้</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">BINGO JJAZ x VCT MASTER LONDON 2026 • Admin Center Panel</div>
+
+  <script>
+    let secretPass = "", pollingInterval;
+    let oldPendingCount = 0; // track for alert sound
+
+    const VCT_TERMS = [
+      "9-3 Curse", "Tech Pause", "Tactical Timeout", "ACE!", "Thrifty Round",
+      "Clutch 1v3", "Ninja Defuse", "Knife Kill", "Flawless Round", "Overtime",
+      "Eco Frag", "Jett Diff", "Team Ace", "Spike Planted A", "Spike Planted B",
+      "Perfect Defuse", "1 HP Dream", "Wallbang", "Lineup Larry", "Blind Kill",
+      "Judge in Smoke", "Odin Spam", "Map Point", "Match Point", "Reverse Sweep",
+      "Crowd Cheering", "Caster Curse", "Player Whiff", "Insane Flick", "Utility Dump",
+      "Fast Rotate", "Fake Site", "Post-plant", "Sheriff 1-tap", "Op Entry" , "six seven", "Neon Diff"
+    ];
+
+    // Anime floating particles generator
+    function generateParticles() {
+      const container = document.getElementById('particles-container');
+      const particleCount = 20;
+      
+      for(let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'anime-star';
+        
+        const size = Math.random() * 5 + 3;
+        particle.style.position = 'absolute';
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.backgroundColor = ['#ff7597', '#a17fff', '#00f3ff', '#ffd23f', '#ffffff'][Math.floor(Math.random() * 5)];
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        particle.style.opacity = Math.random() * 0.4 + 0.1;
+        particle.style.pointerEvents = 'none';
+        
+        const floatDuration = Math.random() * 18 + 12;
+        const driftDistance = (Math.random() - 0.5) * 80;
+        
+        particle.animate([
+          { transform: 'translateY(0px) translateX(0px)', opacity: particle.style.opacity },
+          { transform: `translateY(-120vh) translateX(${driftDistance}px)`, opacity: 0 }
+        ], {
+          duration: floatDuration * 1000,
+          iterations: Infinity,
+          delay: Math.random() * -20000
+        });
+        
+        container.appendChild(particle);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      generateParticles();
+
+      const savedPass = localStorage.getItem('adminSecretPass');
+      const savedRoom = localStorage.getItem('adminRoomID');
+      
+      if (savedPass) {
+        secretPass = savedPass;
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('control-section').style.display = 'block';
+        if (savedRoom) {
+          document.getElementById('admin-room').value = savedRoom;
+          initRoom();
+        }
+      }
+    });
+
+    function checkLogin() {
+      const id = document.getElementById('admin-id').value.trim().toUpperCase();
+      const pwd = document.getElementById('admin-pwd').value.trim().toLowerCase();
+      
+      if (id === "JJAZ" && pwd === "huatua") {
+        secretPass = pwd;
+        localStorage.setItem('adminSecretPass', secretPass);
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('control-section').style.display = 'block';
+      } else {
+        alert("❌ ไม่อนุญาต! รหัสผ่านแอดมินหรือยูสเซอร์เนมไม่ถูกต้อง");
+      }
+    }
+
+    let adminBoard = [];
+
+    async function initRoom() {
+      const room = document.getElementById('admin-room').value.trim();
+      if(!room) return alert("กรุณาป้อนรหัสห้องก่อนครับ!");
+      
+      try {
+        const res = await fetch('/api/create_room?room=' + encodeURIComponent(room) + '&pwd=' + secretPass);
+        const data = await res.json();
+        
+        if(data.error) return alert(data.error);
+        
+        localStorage.setItem('adminRoomID', room);
+        
+        // Load or generate board for this room
+        const savedBoardKey = 'adminBoard_' + room;
+        let boardData = localStorage.getItem(savedBoardKey);
+        if (boardData) {
+          adminBoard = JSON.parse(boardData);
+        } else {
+          let shuffled = [...VCT_TERMS].sort(() => Math.random() - 0.5).slice(0, 24);
+          shuffled.splice(12, 0, "JJAZ");
+          adminBoard = shuffled;
+          localStorage.setItem(savedBoardKey, JSON.stringify(adminBoard));
+        }
+
+        generateAdminGrid();
+        
+        document.getElementById('main-dashboard').style.display = 'flex';
+        
+        if(pollingInterval) clearInterval(pollingInterval);
+        syncAdminData();
+        pollingInterval = setInterval(syncAdminData, 3000);
+      } catch(e) {
+        alert("เกิดข้อผิดพลาดในการเปิดห้องแข่งขัน!");
+      }
+    }
+
+    function generateAdminGrid() {
+      const grid = document.getElementById('admin-bingo-grid');
+      grid.innerHTML = '';
+      
+      adminBoard.forEach((term, index) => {
+        const cell = document.createElement('div');
+        cell.className = 'admin-bingo-cell';
+        const safeId = btoa(unescape(encodeURIComponent(term))).replace(/[/=+]/g, '');
+        cell.id = 'admin-cell-' + safeId;
+        cell.innerText = term;
+        
+        if (term === "JJAZ") {
+          cell.classList.add('jjaz');
+        } else {
+          cell.onclick = () => toggleEvent(term);
+        }
+        grid.appendChild(cell);
+      });
+    }
+
+    async function toggleEvent(term) {
+      const room = document.getElementById('admin-room').value.trim();
+      const safeId = btoa(unescape(encodeURIComponent(term))).replace(/[/=+]/g, '');
+      
+      const cell = document.getElementById('admin-cell-' + safeId);
+      const isMarked = cell && cell.classList.contains('marked');
+      
+      try {
+        if (isMarked) {
+          await fetch('/api/undo_event?room=' + encodeURIComponent(room) + '&pwd=' + secretPass + '&term=' + encodeURIComponent(term));
+        } else {
+          document.getElementById('current-word').innerText = term;
+          await fetch('/api/call_event?room=' + encodeURIComponent(room) + '&pwd=' + secretPass + '&term=' + encodeURIComponent(term));
+        }
+        syncAdminData();
+      } catch (e) {
+        console.error("Error toggling event:", e);
+      }
+    }
+
+    async function approveBingo(name) {
+      const room = document.getElementById('admin-room').value.trim();
+      if (!confirm(`ยืนยันการอนุมัติชัยชนะ BINGO ให้กับคุณ ${name}? 🌸`)) return;
+      
+      try {
+        const res = await fetch('/api/approve_winner?room=' + encodeURIComponent(room) + '&name=' + encodeURIComponent(name) + '&pwd=' + secretPass);
+        const data = await res.json();
+        
+        if (data.success) {
+          playApprovalSound();
+          syncAdminData();
+        }
+      } catch(e) {
+        alert("เกิดข้อผิดพลาดในการอนุมัติ!");
+      }
+    }
+
+    async function resetRoom() {
+      const room = document.getElementById('admin-room').value.trim();
+      if(!room) return;
+      
+      if(confirm("⚠️ คำเตือน: คุณแน่ใจที่จะล้างบอร์ดเหตุการณ์และลบประวัติผู้เล่นทั้งหมดในห้องใช่ไหม?")) {
+        await fetch('/api/reset?room=' + encodeURIComponent(room) + '&pwd=' + secretPass);
+        
+        // Reshuffle the admin board on reset
+        const savedBoardKey = 'adminBoard_' + room;
+        let shuffled = [...VCT_TERMS].sort(() => Math.random() - 0.5).slice(0, 24);
+        shuffled.splice(12, 0, "JJAZ");
+        adminBoard = shuffled;
+        localStorage.setItem(savedBoardKey, JSON.stringify(adminBoard));
+        generateAdminGrid();
+
+        document.getElementById('current-word').innerText = "-";
+        document.getElementById('winner-alert').style.display = 'none';
+        oldPendingCount = 0;
+        syncAdminData();
+      }
+    }
+
+    async function syncAdminData() {
+      const room = document.getElementById('admin-room').value.trim();
+      if(!room) return;
+      
+      try {
+        // 1. Fetch Room Status
+        const statusRes = await fetch('/api/status?room=' + encodeURIComponent(room));
+        const statusData = await statusRes.json();
+        
+        if (statusData && statusData.drawn_numbers) {
+          const drawn = statusData.drawn_numbers.split('|');
+          
+          // Clear all marked states
+          document.querySelectorAll('.admin-bingo-cell').forEach(c => {
+            if (!c.classList.contains('jjaz')) c.classList.remove('marked');
+          });
+          
+          drawn.forEach(t => {
+            const safeId = btoa(unescape(encodeURIComponent(t))).replace(/[/=+]/g, '');
+            
+            const cell = document.getElementById('admin-cell-' + safeId);
+            if (cell && !cell.classList.contains('jjaz')) {
+              cell.classList.add('marked');
+            }
+          });
+          
+          const lastTerm = drawn[drawn.length - 1];
+          document.getElementById('current-word').innerText = lastTerm === "JJAZ" ? "-" : lastTerm;
+          
+          if (statusData.winner) {
+            document.getElementById('winner-name').innerText = statusData.winner;
+            document.getElementById('winner-alert').style.display = 'block';
+          } else {
+            document.getElementById('winner-alert').style.display = 'none';
+          }
+
+          // Handle pending winners listing
+          const pendingList = document.getElementById('pending-list');
+          pendingList.innerHTML = '';
+          
+          const pending = statusData.pending_winners || [];
+          
+          if (pending.length > 0) {
+            if (pending.length > oldPendingCount) {
+              playBingoAlertSound();
+            }
+            oldPendingCount = pending.length;
+
+            pending.forEach(name => {
+              const div = document.createElement('div');
+              div.className = 'pending-card';
+              div.innerHTML = `
+                <div class="pending-info">
+                  <div class="pending-name">👑 ${name}</div>
+                  <div class="pending-status">บิงโกสำเร็จ! รอแอดมินอนุมัติผลรับสิทธิ์</div>
+                </div>
+                <button class="btn-approve" onclick="approveBingo('${name}')">APPROVE BINGO 🌸</button>
+              `;
+              pendingList.appendChild(div);
+            });
+          } else {
+            oldPendingCount = 0;
+            pendingList.innerHTML = '<div class="empty-state">⏳ รอนักลุ้นทำบิงโกสำเร็จ...</div>';
+          }
+        }
+
+        // 2. Fetch registered players list
+        const playersRes = await fetch('/api/players?room=' + encodeURIComponent(room) + '&pwd=' + secretPass);
+        const playersData = await playersRes.json();
+        
+        if (playersData && playersData.players) {
+          document.getElementById('player-count').innerText = `👥 ผู้ร่วมลุ้นบิงโก (${playersData.players.length})`;
+          
+          const list = document.getElementById('player-list');
+          list.innerHTML = '';
+          
+          if (playersData.players.length > 0) {
+            playersData.players.forEach(p => {
+              const span = document.createElement('span');
+              span.className = 'player-tag';
+              span.innerText = p.name;
+              list.appendChild(span);
+            });
+          } else {
+            list.innerHTML = '<div class="empty-state">ยังไม่มีผู้เข้าร่วมห้องนี้</div>';
+          }
+        }
+      } catch(e) {
+        console.error("Sync Admin Error: ", e);
+      }
+    }
+
+    function playBingoAlertSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        function beep(freq, duration, delay) {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.value = freq;
+            osc.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
+            osc.stop(ctx.currentTime + duration);
+          }, delay);
+        }
+        beep(880.00, 0.25, 0);   // A5
+        beep(1174.66, 0.45, 120); // D6
+      } catch(e) {}
+    }
+
+    function playApprovalSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        function beep(freq, duration, delay) {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            osc.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
+            osc.stop(ctx.currentTime + duration);
+          }, delay);
+        }
+        beep(523.25, 0.15, 0);   // C5
+        beep(659.25, 0.15, 80);  // E5
+        beep(783.99, 0.15, 160); // G5
+        beep(1046.50, 0.4, 240); // C6
+      } catch(e) {}
+    }
+
+    function adminLogout() {
+      localStorage.removeItem('adminSecretPass');
+      localStorage.removeItem('adminRoomID');
+      location.reload();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "bingo-master-london"
+main = "worker.js"
+compatibility_date = "2024-03-01"
+
+# 🌸 Cloudflare Workers Assets (Hosting for HTML, CSS, Images)
+[assets]
+directory = "./public"
+
+# 🗄️ Cloudflare KV Namespace (Key-Value Database for Rooms & Players)
+[[kv_namespaces]]
+binding = "BINGO_KV"
+id = "PLACEHOLDER_KV_NAMESPACE_ID" # กรอก ID ที่ได้จากการสร้าง KV ในระบบ Cloudflare Dashboard หรือ CLI
