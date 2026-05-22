@@ -10,4 +10,4 @@ directory = "./public"
 # 🗄️ Cloudflare KV Namespace (Key-Value Database for Rooms & Players)
 [[kv_namespaces]]
 binding = "BINGO_KV"
-id = "PLACEHOLDER_KV_NAMESPACE_ID" # กรอก ID ที่ได้จากการสร้าง KV ในระบบ Cloudflare Dashboard หรือ CLI
+id = "ccc730a17be644deaab7f4fb81366b86" # กรอก ID ที่ได้จากการสร้าง KV ในระบบ Cloudflare Dashboard หรือ CLI
