@@ -562,7 +562,7 @@
     <div class="join-section" id="joinSection">
       <p class="join-description">
         กรอกชื่อและรหัสห้องสตรีมเพื่อเริ่มสุ่มแผ่นบิงโกเวทมนตร์ <br>
-        ระกาศคำศัพท์ในสตรีมออโต้! นั่งลุ้นสนุกๆ และฟินกันยาวๆ 🌸
+        ประกาศคำศัพท์ในสตรีมออโต้! นั่งลุ้นสนุกๆ และฟินกันยาวๆ 🌸
       </p>
       <div class="input-group">
         <label for="name">🌸 ชื่อตัวละคร / ชื่อผู้ใช้</label>
@@ -580,6 +580,20 @@
       <div class="status-container">
         <div class="status-bar" id="statusBar">
           ⏳ รอแอดมินเริ่มร่ายมนตร์ประกาศเหตุการณ์แรก...
+        </div>
+        <!-- 👤 Cute Player Name & Room ID Display Badge -->
+        <div style="background: rgba(20, 16, 33, 0.55); padding: 12px 20px; border-radius: 14px; font-size: 0.95rem; text-align: center; border: 1.5px solid rgba(255, 117, 151, 0.2); display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+          <span style="display: inline-flex; align-items: center; gap: 6px;">
+            <span style="font-size: 1.1rem;">👤</span> 
+            <span style="color: #b2a8cc; font-weight: 500;">ผู้เล่น:</span> 
+            <strong id="playerDisplayName" style="color: var(--anime-cyan); font-weight: 700; text-shadow: 0 0 10px rgba(0, 243, 255, 0.45);">-</strong>
+          </span>
+          <span style="color: rgba(255, 117, 151, 0.25);">|</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;">
+            <span style="font-size: 1.1rem;">🔑</span> 
+            <span style="color: #b2a8cc; font-weight: 500;">ห้อง:</span> 
+            <strong id="roomDisplayName" style="color: var(--anime-gold); font-weight: 700; text-shadow: 0 0 10px rgba(255, 210, 63, 0.45);">-</strong>
+          </span>
         </div>
         <div class="pending-banner" id="pendingBanner">
           👑 คุณได้ BINGO แล้ว! กำลังรอแอดมินตรวจสอบบอร์ดและกดอนุมัติ... 🌸
@@ -693,6 +707,9 @@
         document.getElementById('joinSection').style.display = 'none';
         document.getElementById('gameSection').style.display = 'block';
         
+        if (document.getElementById('playerDisplayName')) document.getElementById('playerDisplayName').innerText = playerName;
+        if (document.getElementById('roomDisplayName')) document.getElementById('roomDisplayName').innerText = roomID;
+        
         renderBoard();
         syncStatus();
         syncInterval = setInterval(syncStatus, 2000);
@@ -739,6 +756,9 @@
         lockInputs();
         document.getElementById('joinSection').style.display = 'none';
         document.getElementById('gameSection').style.display = 'block';
+        
+        if (document.getElementById('playerDisplayName')) document.getElementById('playerDisplayName').innerText = playerName;
+        if (document.getElementById('roomDisplayName')) document.getElementById('roomDisplayName').innerText = roomID;
         
         renderBoard();
         if(syncInterval) clearInterval(syncInterval);
